@@ -1,20 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 
 namespace Alve_OS.System.Interpreter
 {
     public class App
     {
-        public void Init(string script)
+        public void Init(string file)
         {
-            var sc = new App();
+            string script = File.ReadAllText(Kernel.current_directory + file);
             Script(script);
         }
 
-        public void Script(string app)
+        public void Script(string script)
         {
-
+            
         }
     }
 }
