@@ -215,6 +215,21 @@ namespace Alve_OS.Shell
                     L.Text.Display("unknowncolor");
                 }
             }
+            else if (cmd.StartsWith("run "))
+            {
+                string file = cmd.Remove(0, 4);
+                if (File.Exists(Kernel.current_directory + file))
+                {
+                    System.Interpreter.App application = new System.Interpreter.App();
+                    application.Init(file);
+                }
+                else
+                {
+                    Console.ForegroundColor = ConsoleColor.DarkRed;
+                    L.Text.Display("UnknownCommand");
+                    Console.ForegroundColor = ConsoleColor.White;
+                }
+            }
             else
             {
                 Console.ForegroundColor = ConsoleColor.DarkRed;
