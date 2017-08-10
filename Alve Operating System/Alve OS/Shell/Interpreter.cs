@@ -1,4 +1,4 @@
-﻿/*
+/*
 * PROJECT:          Alve Operating System Development
 * CONTENT:          Interpreter
 * PROGRAMMERS:      Alexy DA CRUZ <dacruzalexy@gmail.com>
@@ -9,6 +9,9 @@ using System;
 using System.IO;
 using Sys = Cosmos.System;
 using L = Alve_OS.System.Translation;
+using Alve_OS.System;
+using Alve_OS.System.Users;
+using Alve_OS.System.Computer;
 
 namespace Alve_OS.Shell
 {
@@ -16,6 +19,9 @@ namespace Alve_OS.Shell
     {
         public static void Interpret(string cmd)
         {
+
+            #region Power
+
             if (cmd.Equals("shutdown"))
             {
                 Kernel.running = false;
@@ -23,6 +29,7 @@ namespace Alve_OS.Shell
                 L.Text.Display("shutdown");
                 Sys.Power.Shutdown();
             }
+
             else if (cmd.Equals("reboot"))
             {
                 Kernel.running = false;
@@ -30,19 +37,132 @@ namespace Alve_OS.Shell
                 L.Text.Display("restart");
                 Sys.Power.Reboot();
             }
+
+            #endregion
+
+            #region Console
+            
             else if (cmd.Equals("clear"))
             {
                 Console.Clear();
             }
+
             else if (cmd.StartsWith("echo "))
             {
                 cmd = cmd.Remove(0, 5);
                 Console.WriteLine(cmd);
             }
+
             else if (cmd.Equals("help"))
             {
-                L.Help.Display();
+                L.Help.HelpD();
             }
+
+            else if (cmd.Equals("textcolor"))
+            {
+                L.Color.Display();
+            }
+
+            else if (cmd.StartsWith("textcolor "))
+            {
+                string color = cmd.Remove(0, 10);
+                if (color.Equals("0"))
+                {
+                    Color.SetTextColor("0");
+                    Kernel.color = 0;
+                }
+                else if (color.Equals("1"))
+                {
+                    Color.SetTextColor("1");
+                    Kernel.color = 1;
+                }
+                else if (color.Equals("2"))
+                {
+                    Color.SetTextColor("2");
+                    Kernel.color = 2;
+                }
+                else if (color.Equals("3"))
+                {
+                    Color.SetTextColor("3");
+                    Kernel.color = 3;
+                }
+                else if (color.Equals("4"))
+                {
+                    Color.SetTextColor("4");
+                    Kernel.color = 4;
+                }
+                else if (color.Equals("5"))
+                {
+                    Color.SetTextColor("5");
+                    Kernel.color = 5;
+                }
+                else if (color.Equals("6"))
+                {
+                    Color.SetTextColor("6");
+                    Kernel.color = 6;
+                }
+                else if (color.Equals("7"))
+                {
+                    Color.SetTextColor("7");
+                    Kernel.color = 7;
+                }
+                else
+                {
+                    L.Text.Display("unknowncolor");
+                    Kernel.color = -1;
+                }
+            }
+
+            else if (cmd.Equals("backgroundcolor"))
+            {
+                L.Color.Display();
+            }
+
+            else if (cmd.StartsWith("backgroundcolor "))
+            {
+                string color = cmd.Remove(0, 16);
+                if (color.Equals("0"))
+                {
+                    Color.SetBackgroundColor("0");
+                }
+                else if (color.Equals("1"))
+                {
+                    Color.SetBackgroundColor("1");
+                }
+                else if (color.Equals("2"))
+                {
+                    Color.SetBackgroundColor("2");
+                }
+                else if (color.Equals("3"))
+                {
+                    Color.SetBackgroundColor("3");
+                }
+                else if (color.Equals("4"))
+                {
+                    Color.SetBackgroundColor("4");
+                }
+                else if (color.Equals("5"))
+                {
+                    Color.SetBackgroundColor("5");
+                }
+                else if (color.Equals("6"))
+                {
+                    Color.SetBackgroundColor("6");
+                }
+                else if (color.Equals("7"))
+                {
+                    Color.SetBackgroundColor("7");
+                }
+                else
+                {
+                    L.Text.Display("unknowncolor");
+                }
+            }
+
+            #endregion
+
+            #region FileSystem
+
             else if (cmd.Equals("cd .."))
             {
                 Directory.SetCurrentDirectory(Kernel.current_directory);
@@ -55,6 +175,7 @@ namespace Alve_OS.Shell
                     Kernel.current_directory = dir.mParent.mFullPath;
                 }
             }
+
             else if (cmd.StartsWith("cd "))
             {
                 string dir = cmd.Remove(0, 3);
@@ -68,19 +189,98 @@ namespace Alve_OS.Shell
                     L.Text.Display("directorydoesntexist");
                 }
             }
-            else if (cmd.Equals("dir"))
+
+            else if ((cmd.Equals("dir")) || (cmd.Equals("ls")))
             {
-                L.Text.Display("typename");
-                foreach (var dir in Directory.GetDirectories(Kernel.current_directory))
+                foreach (string dir in Directory.GetDirectories(Kernel.current_directory))
                 {
-                    Console.WriteLine("<DIR>\t" + dir);
+                    Color.DisplayTextColor("6");
+                    Console.Write(dir + "\t");
                 }
-                foreach (var dir in Directory.GetFiles(Kernel.current_directory))
+                foreach (string file in Directory.GetFiles(Kernel.current_directory))
+                {                    
+                    Char formatDot = '.';
+                    string[] ext = file.Split(formatDot);
+                    string lastext = ext[ext.Length - 1];
+
+                    if ((lastext == "set") || (lastext == "nam") || (lastext == "usr"))
+                    {
+                        Color.DisplayTextColor("4");
+                        Console.Write(file + "\t");
+                    }
+                    else
+                    {
+                        Color.DisplayTextColor("1");
+                        Console.Write(file + "\t");
+                    }
+                }
+                Console.WriteLine();
+            }
+
+            else if ((cmd.StartsWith("dir ")) || (cmd.StartsWith("ls ")))
+            {
+                string cmddir;
+                if (cmd.StartsWith("dir "))
                 {
-                    Console.WriteLine("     \t" + dir);
+                    cmddir = cmd.Remove(0, 4);
+
+                    foreach (string dir in Directory.GetDirectories(cmddir))
+                    {
+                        Color.DisplayTextColor("6");
+                        Console.Write(dir + "\t");
+                    }
+                    foreach (string file in Directory.GetFiles(cmddir))
+                    {
+                        Char formatDot = '.';
+                        string[] ext = file.Split(formatDot);
+                        string lastext = ext[ext.Length - 1];
+
+                        if ((lastext == "set") || (lastext == "nam") || (lastext == "usr"))
+                        {
+                            Color.DisplayTextColor("4");
+                            Console.Write(file + "\t");
+                        }
+                        else
+                        {
+                            Color.DisplayTextColor("1");
+                            Console.Write(file + "\t");
+                        }
+                    }
+                    Console.WriteLine();
                 }
 
+                else if (cmd.StartsWith("ls "))
+                {
+                    cmddir = cmd.Remove(0, 3);
+
+                    foreach (string dir in Directory.GetDirectories(cmddir))
+                    {
+                        Color.DisplayTextColor("6");
+                        Console.Write(dir + "\t");
+                    }
+                    foreach (string file in Directory.GetFiles(cmddir))
+                    {
+                        Char formatDot = '.';
+                        string[] ext = file.Split(formatDot);
+                        string lastext = ext[ext.Length - 1];
+
+                        if ((lastext == "set") || (lastext == "nam") || (lastext == "usr"))
+                        {
+                            Color.DisplayTextColor("4");
+                            Console.Write(file + "\t");
+                        }
+                        else
+                        {
+                            Color.DisplayTextColor("1");
+                            Console.Write(file + "\t");
+                        }
+                    }
+                    Console.WriteLine();
+                }
+
+                
             }
+
             else if (cmd.StartsWith("mkdir "))
             {
                 string dir = cmd.Remove(0, 6);
@@ -93,6 +293,7 @@ namespace Alve_OS.Shell
                     Kernel.FS.CreateDirectory(Kernel.current_directory + dir + "-1");
                 }
             }
+
             else if (cmd.StartsWith("rmdir "))
             {
                 string dir = cmd.Remove(0, 6);
@@ -105,6 +306,7 @@ namespace Alve_OS.Shell
                     L.Text.Display("doesnotexist");
                 }
             }
+
             else if (cmd.StartsWith("rmfil "))
             {
                 string file = cmd.Remove(0, 6);
@@ -117,104 +319,168 @@ namespace Alve_OS.Shell
                     L.Text.Display("doesnotexist");
                 }
             }
+
+            else if (cmd.Equals("mkfil"))
+            {
+                L.Text.Display("mkfil");
+            }
+
             else if (cmd.StartsWith("mkfil "))
             {
                 string file = cmd.Remove(0, 6);
                 if (!File.Exists(Kernel.current_directory + file))
                 {
-                    File.Create(Kernel.current_directory + file);
+                    Apps.User.Editor application = new Apps.User.Editor();
+                    application.Start(file, Kernel.current_directory);
                 }
                 else
                 {
                     L.Text.Display("alreadyexist");
                 }
             }
+
+            else if (cmd.StartsWith("prfil "))
+            {
+                string file = cmd.Remove(0, 6);
+                if (File.Exists(Kernel.current_directory + file))
+                {
+                    Apps.User.Editor application = new Apps.User.Editor();
+                    application.Start(file, Kernel.current_directory);
+                }
+                else
+                {
+                    L.Text.Display("doesnotexit");
+                }
+            }
+
             else if (cmd.Equals("vol"))
             {
                 var vols = Kernel.FS.GetVolumes();
+                
                 L.Text.Display("NameSizeParent");
                 foreach (var vol in vols)
                 {
                     Console.WriteLine(vol.mName + "\t" + vol.mSize + "\t" + vol.mParent);
                 }
             }
+
+            #endregion
+
+            #region Settings
+
+            else if (cmd.Equals("setup"))
+            {
+                L.Text.Display("setupcmd");
+                string setup = Console.ReadLine();
+                if (setup == "o")
+                {
+                    SetupInit.Init();
+                }
+            }
+
+            else if (cmd.Equals("logout"))
+            {
+                Kernel.Logged = false;
+                Kernel.userLevelLogged = "";
+                Kernel.userLogged = "";
+                Console.Clear();
+                WelcomeMessage.Display();
+            }
+
+            else if (cmd.Equals("settings"))
+            {
+                L.Help.Settings();
+            }
+
+            else if (cmd.StartsWith("settings "))
+            {
+                string argsettings = cmd.Remove(0, 9);
+                if (argsettings.Equals("adduser"))
+                {
+                    //method user
+                    string argsuser = argsettings.Remove(0, 7);
+                    Users users = new Users();
+
+                    users.Create(argsuser);
+
+                }
+                else if (argsettings.Equals("setcomputername"))
+                {
+                    //method computername
+                    string argspcname = argsettings.Remove(0, 15);
+                    Info.AskComputerName();
+
+                }
+                else if (argsettings.Equals("setlang"))
+                {
+                    L.Text.Display("availablelanguage");
+                }
+                else if (argsettings.StartsWith("setlang "))
+                {
+                    string lang = argsettings.Remove(0, 8);
+                    if ((lang.Equals("en_US")) || lang.Equals("en-US"))
+                    {
+                        Kernel.langSelected = "en_US";
+                        L.Keyboard.Init();
+                        if (File.Exists(@"0:\System\lang.set"))
+                        {
+                            File.WriteAllText(@"0:\System\lang.set", Kernel.langSelected);
+                        }
+                        else
+                        {
+                            File.Create(@"0:\System\lang.set");
+                            File.WriteAllText(@"0:\System\lang.set", Kernel.langSelected);
+                        }
+                    }
+                    else if ((lang.Equals("fr_FR")) || lang.Equals("fr-FR"))
+                    {
+                        Kernel.langSelected = "fr_FR";
+                        L.Keyboard.Init();
+                        if (File.Exists(@"0:\System\lang.set"))
+                        {
+                            File.WriteAllText(@"0:\System\lang.set", Kernel.langSelected);
+                        }
+                        else
+                        {
+                            File.Create(@"0:\System\lang.set");
+                            File.WriteAllText(@"0:\System\lang.set", Kernel.langSelected);
+                        }
+                    }
+                    else
+                    {
+                        L.Text.Display("unknownlanguage");
+                        L.Text.Display("availablelanguage");
+                    }
+                }
+            }
+
+            #endregion
+
+            #region System Infos
+            
             else if (cmd.Equals("systeminfo"))
             {
+                L.Text.Display("Computername");
                 L.Text.Display("OSName");
                 L.Text.Display("OSVersion");
                 L.Text.Display("OSRevision");
+                L.Text.Display("AmountRAM");
             }
-            else if (cmd.Equals("langset"))
-            {
-                L.Text.Display("availablelanguage");
-            }
-            else if (cmd.StartsWith("langset "))
-            {
-                cmd = cmd.Remove(0, 8);
-                if (cmd.Equals("en_US"))
-                {
-                    Kernel.langSelected = "en_US";
-                    L.Keyboard.Init();
-                }
-                else if (cmd.Equals("fr_FR"))
-                {
-                    Kernel.langSelected = "fr_FR";
-                    L.Keyboard.Init();
-                }
-                else
-                {
-                    L.Text.Display("unknownlanguage");
-                    L.Text.Display("availablelanguage");
-                }
-            }
+
             else if (cmd.Equals("ver"))
             {
                 Console.WriteLine("Alve [version " + Kernel.version + "-" + Kernel.revision + "]");
             }
-            else if (cmd.Equals("color"))
+
+            #endregion
+
+            #region Tests
+
+            else if (cmd.Equals("crash"))
             {
-                L.Color.Display();
+                throw new Exception("Crash test");
             }
-            else if (cmd.StartsWith("color "))
-            {
-                string color = cmd.Remove(0, 6);
-                if (color.Equals("0"))
-                {
-                    Console.ForegroundColor = ConsoleColor.Black;
-                }
-                else if (color.Equals("1"))
-                {
-                    Console.ForegroundColor = ConsoleColor.Blue;
-                }
-                else if (color.Equals("2"))
-                {
-                    Console.ForegroundColor = ConsoleColor.Green;
-                }
-                else if (color.Equals("3"))
-                {
-                    Console.ForegroundColor = ConsoleColor.DarkBlue;
-                }
-                else if (color.Equals("4"))
-                {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                }
-                else if (color.Equals("5"))
-                {
-                    Console.ForegroundColor = ConsoleColor.Magenta;
-                }
-                else if (color.Equals("6"))
-                {
-                    Console.ForegroundColor = ConsoleColor.Yellow;
-                }
-                else if (color.Equals("7"))
-                {
-                    Console.ForegroundColor = ConsoleColor.White;
-                }
-                else
-                {
-                    L.Text.Display("unknowncolor");
-                }
-            }
+
             else if (cmd.StartsWith("run "))
             {
                 string file = cmd.Remove(0, 4);
@@ -230,12 +496,17 @@ namespace Alve_OS.Shell
                     Console.ForegroundColor = ConsoleColor.White;
                 }
             }
+
+            #endregion
+
+
             else
             {
                 Console.ForegroundColor = ConsoleColor.DarkRed;
                 L.Text.Display("UnknownCommand");
                 Console.ForegroundColor = ConsoleColor.White;
             }
-        }
+
+        } 
     }
 }
