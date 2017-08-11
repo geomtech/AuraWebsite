@@ -481,18 +481,37 @@ namespace Alve_OS.Shell
                 throw new Exception("Crash test");
             }
 
+            else if (cmd.Equals("run"))
+            {
+                Console.ForegroundColor = ConsoleColor.Green;
+                L.Text.Display("runuse");
+                Console.ForegroundColor = ConsoleColor.White;
+            }
             else if (cmd.StartsWith("run "))
             {
                 string file = cmd.Remove(0, 4);
                 if (File.Exists(Kernel.current_directory + file))
                 {
-                    System.Interpreter.App application = new System.Interpreter.App();
-                    application.Init(file);
+                    Char dot = '.';
+                    string[] filename = file.Split(dot);
+                    string lastext = filename[filename.Length - 1];
+
+                    if((lastext == "bat") || (lastext == "alv"))
+                    {
+                        System.Interpreter.App application = new System.Interpreter.App();
+                        application.Init(file);
+                    }
+                    else
+                    {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        L.Text.Display("runnotsupported");
+                        Console.ForegroundColor = ConsoleColor.White;
+                    }
                 }
                 else
                 {
-                    Console.ForegroundColor = ConsoleColor.DarkRed;
-                    L.Text.Display("UnknownCommand");
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    L.Text.Display("runfiledoesntexist");
                     Console.ForegroundColor = ConsoleColor.White;
                 }
             }

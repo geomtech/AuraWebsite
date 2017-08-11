@@ -117,7 +117,7 @@ namespace Alve_OS
 
         #endregion
 
-        private void BeforeCommand()
+        public static void BeforeCommand()
         {
             if (current_directory == @"0:\")
             {

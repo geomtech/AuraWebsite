@@ -146,6 +146,12 @@ namespace Alve_OS.System.Translation
                         case "foldercontent":
                             Console.WriteLine("Contenu du dossier '" + arg + "':");
                             break;
+                        case "runuse":
+                            Console.WriteLine("Utilisation: run nomdufichier.bat");
+                            break;
+                        case "runnotsupported":
+                            Console.WriteLine("Ce fichier n'est pas un script.");
+                            break;
 
                     }
                     break;
@@ -268,6 +274,15 @@ namespace Alve_OS.System.Translation
                             break;
                         case "foldercontent":
                             Console.WriteLine("Folder's content of '" + arg + "':");
+                            break;
+                        case "runfiledoesntexist":
+                            Console.WriteLine("This file doesn't exist.");
+                            break;
+                        case "runuse":
+                            Console.WriteLine("Use: run filename.bat");
+                            break;
+                        case "runnotsupported":
+                            Console.WriteLine("This file is not a script.");
                             break;
                     }
                     break;

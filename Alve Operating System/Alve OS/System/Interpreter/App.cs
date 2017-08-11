@@ -7,6 +7,8 @@ namespace Alve_OS.System.Interpreter
 {
     public class App
     {
+        bool echocmd = true;
+
         public void Init(string file)
         {
             string script = File.ReadAllText(Kernel.current_directory + file);
@@ -23,6 +25,14 @@ namespace Alve_OS.System.Interpreter
 
         public string Script(string s, string file)
         {
+            if (s.Equals("echo off"))
+            {
+                echocmd = false;
+            }
+            else if (s.Equals("echo on"))
+            {
+                echocmd = true;
+            }
             if (s.StartsWith("rem"))
             {
                 int end = file.IndexOf("rem");
@@ -40,14 +50,20 @@ namespace Alve_OS.System.Interpreter
                 string echo = file.Remove(0, location + 5);
                 echo = echo.Remove(echo.IndexOf("\n"), echo.Length - (echo.IndexOf("\n")));
                 echo = echo.Remove(echo.Length - 1, 1);
+                
+                if((!echo.Equals("off")) || (!echo.Equals("on"))){
 
-                if (echo.Equals("echo off"))
-                {
-                    //TODO
-                }
-                else
-                {
-                    Console.WriteLine(echo);
+                    if (echocmd)
+                    {
+                        Kernel.BeforeCommand();
+                        Console.Write(s);
+                        Console.WriteLine(echo);
+                    }
+                    else if (echocmd == false)
+                    {
+                        Console.WriteLine(echo);
+                    }
+
                 }
 
                 int end = file.IndexOf("echo");
