@@ -8,10 +8,10 @@
 using System;
 using System.IO;
 using Sys = Cosmos.System;
-using L = Alve_OS.System.Translation;
 using Alve_OS.System;
 using Alve_OS.System.Users;
 using Alve_OS.System.Computer;
+using L = Alve_OS.System.Translation;
 
 namespace Alve_OS.Shell
 {
@@ -498,7 +498,14 @@ namespace Alve_OS.Shell
 
                     if((lastext == "bat") || (lastext == "alv"))
                     {
-                        System.Interpreter.App application = new System.Interpreter.App();
+                        if(lastext == "bat")
+                        {
+                            Console.ForegroundColor = ConsoleColor.Green;
+                            L.Text.Display("limitbatfile");
+                            Console.ForegroundColor = ConsoleColor.White;
+                            Console.WriteLine();
+                        }
+                        System.Interpreters.AlveScript application = new System.Interpreters.AlveScript();
                         application.Init(file);
                     }
                     else

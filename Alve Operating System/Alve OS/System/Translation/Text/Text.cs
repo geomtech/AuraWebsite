@@ -152,6 +152,12 @@ namespace Alve_OS.System.Translation
                         case "runnotsupported":
                             Console.WriteLine("Ce fichier n'est pas un script.");
                             break;
+                        case "touchkeyboard":
+                            Console.WriteLine("Appuyer sur une touche pour continuer...");
+                            break;
+                        case "limitbatfile":
+                            Console.WriteLine("L'interpreteur batch d'Alve ne fonctionne qu'avec les limites des \nfonctionnalités du système, de ce fait, certaines commandes ne \nfonctionneront peut être pas.");
+                            break;
 
                     }
                     break;
@@ -283,6 +289,12 @@ namespace Alve_OS.System.Translation
                             break;
                         case "runnotsupported":
                             Console.WriteLine("This file is not a script.");
+                            break;
+                        case "touchkeyboard":
+                            Console.WriteLine("Press anykey to continue...");
+                            break;
+                        case "limitbatfile": //a mieux traduire mdr jsuis fatigué                            
+                            Console.WriteLine("Batch Interpretor of Alve works with limits of the system, so certains commands may not works.");
                             break;
                     }
                     break;

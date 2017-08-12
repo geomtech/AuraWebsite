@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using Alve_OS.System.Translation;
 
-namespace Alve_OS.System.Interpreter
+namespace Alve_OS.System.Interpreters
 {
-    public class App
+    public class AlveScript
     {
         bool echocmd = true;
 
@@ -25,21 +26,26 @@ namespace Alve_OS.System.Interpreter
 
         public string Script(string s, string file)
         {
-            if (s.Equals("echo off"))
-            {
-                echocmd = false;
-            }
-            else if (s.Equals("echo on"))
-            {
-                echocmd = true;
-            }
             if (s.StartsWith("rem"))
             {
+
                 int end = file.IndexOf("rem");
                 file = file.Remove(end, 3);
+
+                if (echocmd)
+                {
+                    Kernel.BeforeCommand();
+                    Console.WriteLine("rem " + file);
+                }
+
             }
             if (s.StartsWith("cls"))
             {
+                if (echocmd)
+                {
+                    Kernel.BeforeCommand();
+                    Console.WriteLine("cls");
+                }
                 int location = file.IndexOf("cls");
                 file = file.Remove(location, 3);
                 Console.Clear();
@@ -50,20 +56,34 @@ namespace Alve_OS.System.Interpreter
                 string echo = file.Remove(0, location + 5);
                 echo = echo.Remove(echo.IndexOf("\n"), echo.Length - (echo.IndexOf("\n")));
                 echo = echo.Remove(echo.Length - 1, 1);
-                
-                if((!echo.Equals("off")) || (!echo.Equals("on"))){
 
+                if ((echo == "on") || (echo == "off"))
+                {
+                    if(echo == "on")
+                    {
+                        echocmd = true;
+                        Kernel.BeforeCommand();
+                        Console.WriteLine("echo on");
+                    }
+                    else
+                    {
+                        echocmd = false;
+                    }
+                }
+                else
+                { 
                     if (echocmd)
                     {
                         Kernel.BeforeCommand();
-                        Console.Write(s);
+                        Console.Write(s + " ");
+                        Console.WriteLine(echo);
+                        Kernel.BeforeCommand();
                         Console.WriteLine(echo);
                     }
-                    else if (echocmd == false)
+                    else
                     {
                         Console.WriteLine(echo);
                     }
-
                 }
 
                 int end = file.IndexOf("echo");
@@ -71,10 +91,36 @@ namespace Alve_OS.System.Interpreter
             }
             if (s.StartsWith("pause"))
             {
+                if (echocmd)
+                {
+                    Kernel.BeforeCommand();
+                    Console.WriteLine("pause");
+                    Kernel.BeforeCommand();
+                    Text.Display("touchkeyboard");
+                }
+                else
+                {
+                    Text.Display("touchkeyboard");
+                }
+
                 Console.ReadKey();
                 int end = file.IndexOf("pause");
                 file = file.Remove(end, 5);
             }
+
+            if (s.StartsWith("cls"))
+            {
+                if (echocmd)
+                {
+                    Kernel.BeforeCommand();
+                    Console.WriteLine("cls");
+                }
+                int location = file.IndexOf("cls");
+                file = file.Remove(location, 3);
+                Console.Clear();
+            }
+
+
             return file;
         }
     }
