@@ -488,6 +488,15 @@ namespace Alve_OS.Shell
                 throw new Exception("Crash test");
             }
 
+            else if (cmd.Equals("thread"))
+            {
+                Sys.Threading.Thread t1 = new Sys.Threading.Thread(Thread1);
+                Sys.Threading.Thread t2 = new Sys.Threading.Thread(Thread2);
+                t1.Start();
+                t2.Start();
+                //
+            }
+
             #endregion
 
             else
@@ -498,5 +507,23 @@ namespace Alve_OS.Shell
             }
 
         } 
+
+        private static void Thread1()
+        {
+            while  (true)
+            {
+                for (int i = 0; i < 50000; i++) { }
+                Console.WriteLine("Thread 1");
+            }
+        }
+
+        private static void Thread2()
+        {
+            while (true)
+            {
+                for (int i = 0; i < 50000; i++) { }
+                Console.WriteLine("Thread 2");
+            }
+        }
     }
 }

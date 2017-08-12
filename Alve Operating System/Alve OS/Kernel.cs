@@ -45,6 +45,12 @@ namespace Alve_OS
         protected override void BeforeRun()
         {
 
+            #region InitMultitasking
+
+            Cosmos.HAL.Global.InitMultitasking();
+
+            #endregion
+
             #region FileSystem Init
 
             Console.WriteLine("Initializing FileSystem...");
