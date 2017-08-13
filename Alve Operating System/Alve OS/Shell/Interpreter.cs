@@ -12,6 +12,7 @@ using L = Alve_OS.System.Translation;
 using Alve_OS.System;
 using Alve_OS.System.Users;
 using Alve_OS.System.Computer;
+using Alve_OS.System.GUI;
 
 namespace Alve_OS.Shell
 {
@@ -486,6 +487,11 @@ namespace Alve_OS.Shell
             else if (cmd.Equals("crash"))
             {
                 throw new Exception("Crash test");
+            }
+
+            else if (cmd.Equals("graphic"))
+            {
+                CGS.Start();
             }
 
             #endregion
