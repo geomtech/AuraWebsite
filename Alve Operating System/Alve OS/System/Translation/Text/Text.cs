@@ -158,7 +158,9 @@ namespace Alve_OS.System.Translation
                         case "limitbatfile":
                             Console.WriteLine("L'interpreteur batch d'Alve ne fonctionne qu'avec les limites des \nfonctionnalités du système, de ce fait, certaines commandes ne \nfonctionneront peut être pas.");
                             break;
-
+                        case "dateoftheday":
+                            Console.WriteLine("La date du jour est : " + arg);
+                            break;
                     }
                     break;
 
@@ -295,6 +297,9 @@ namespace Alve_OS.System.Translation
                             break;
                         case "limitbatfile": //a mieux traduire mdr jsuis fatigué                            
                             Console.WriteLine("Batch Interpretor of Alve works with limits of the system, so certains commands may not works.");
+                            break;
+                        case "dateoftheday":
+                            Console.WriteLine("Date of the day is : " + arg);
                             break;
                     }
                     break;

@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.Net.Sdk">
+﻿<Project Sdk="Microsoft.Net.Sdk">
   <PropertyGroup>
     <TargetFramework>net462</TargetFramework>
   </PropertyGroup>
@@ -58,6 +58,7 @@
     <Folder Include="Apps\User\" />
     <Folder Include="Shell\" />
     <Folder Include="System\" />
+    <Folder Include="System\Interpreters\" />
     <Folder Include="System\Interpreter\" />
     <Folder Include="System\Computer\" />
     <Folder Include="System\Drawable\" />

@@ -120,6 +120,32 @@ namespace Alve_OS.System.Interpreters
                 Console.Clear();
             }
 
+            if (s.StartsWith("shutdown"))
+            {
+                if (echocmd)
+                {
+                    Kernel.BeforeCommand();
+                    Console.WriteLine("shutdown");
+                }
+                int location = file.IndexOf("shutdown");
+                file = file.Remove(location, 8);
+                Cosmos.System.Power.Shutdown();
+
+            }
+
+            if (s.StartsWith("date"))
+            {
+                if (echocmd)
+                {
+                    Kernel.BeforeCommand();
+                    Console.WriteLine("date");
+                }
+                int location = file.IndexOf("date");
+                file = file.Remove(location, 4);
+                Text.Display("dateoftheday", "date"); //todo
+
+            }
+
 
             return file;
         }
