@@ -2,7 +2,7 @@
 A Cosmos based Operating System developped in C# made by Alexy DA CRUZ (GeomTech) and Valentin Charbonnier (valentinbreiz).
 
 ## Current features
-Please read the [TODO](https://github.com/Alve-OS/Alve-Operating-System/blob/master/TODO.md) file to know what will be added soon.
+Please read the [TODO](https://github.com/Alve-OS/Alve-Operating-System/blob/master/TODO.md) file or the [Alve Progression](https://github.com/Alve-OS/Alve-Operating-System/projects/1) to know what will be added soon.
 
 * Restart.
 * Shutdown.
@@ -13,7 +13,8 @@ Please read the [TODO](https://github.com/Alve-OS/Alve-Operating-System/blob/mas
 * Extended ASCII support.
 * Multi users.
 * Secured Users With MD5 Encryption.
-* Text Editor (Liquid Editor)
+* Text Editor (Liquid Editor).
+* Get RAM, get time.
 
 ## Screenshots
 
@@ -25,14 +26,14 @@ Shell:
 
 ![Alve Operating System](https://image.noelshack.com/fichiers/2017/32/4/1502379822-alve5.png)
 
-![Alve Operating System](https://image.noelshack.com/fichiers/2017/32/4/1502320901-alve2.png)
+![Alve Operating System](https://image.noelshack.com/fichiers/2017/32/5/1502404673-alve6.png)
 
 ![Alve Operating System](https://image.noelshack.com/fichiers/2017/31/4/1501777813-alve5.png)
 
 ## Want to try Alve?
 Download VMWare [at this address](https://my.vmware.com/en/web/vmware/free#desktop_end_user_computing/vmware_workstation_player/12_0). Install and run it.
 
-Now click on "Create a new virtual machine", select the [Alve ISO](https://github.com/Alve-OS/Alve-Operating-System/releases/download/0.2-100820171748/Alve-0.2-100820171748.iso) and click the "Next" button.
+Now click on "Create a new virtual machine", select the iso file downloaded on [this page](https://github.com/Alve-OS/Alve-Operating-System/releases) and click the "Next" button.
 
 Now click on "Other" for "Guest operating system" and "Other" for version, click "Next" again, select "Store virtual disk as a single file" and select "Finish". 
 

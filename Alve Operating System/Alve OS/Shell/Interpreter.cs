@@ -360,7 +360,7 @@ namespace Alve_OS.Shell
                 L.Text.Display("NameSizeParent");
                 foreach (var vol in vols)
                 {
-                    Console.WriteLine(vol.mName + "\t" + vol.mSize + "\t" + vol.mParent);
+                    Console.WriteLine(vol.mName + "\t" + vol.mSize + "MB\t" + vol.mParent);
                 }
             }
 
@@ -452,6 +452,12 @@ namespace Alve_OS.Shell
                         L.Text.Display("availablelanguage");
                     }
                 }
+                else
+                {
+                    Console.ForegroundColor = ConsoleColor.DarkRed;
+                    L.Text.Display("UnknownCommand");
+                    Console.ForegroundColor = ConsoleColor.White;
+                }
             }
 
             #endregion
@@ -464,7 +470,9 @@ namespace Alve_OS.Shell
                 L.Text.Display("OSName");
                 L.Text.Display("OSVersion");
                 L.Text.Display("OSRevision");
+                L.Text.Display("time");
                 L.Text.Display("AmountRAM");
+                L.Text.Display("MAC");
             }
 
             else if (cmd.Equals("ver"))

@@ -20,8 +20,13 @@ namespace Alve_OS.System.Translation
          * à la langue du système. Vous devez donc
          * associer un mot clé à une phrase.
          */
-
-        public static void Display(string ToTranslate, string arg = "")
+        
+        /// <summary>
+        /// Affiche un string traduit dans la langue de l'utilisateur
+        /// </summary>
+        /// <param name="ToTranslate">mot clé</param>
+        /// <param name="arg">string dynamique</param>
+        public static void Display(string ToTranslate, string arg = "", string arg2 = "")
         {
             switch (Kernel.langSelected)
             {
@@ -48,7 +53,7 @@ namespace Alve_OS.System.Translation
                             Console.WriteLine(arg + " existe deja !");
                             break;
                         case "NameSizeParent":
-                            Console.WriteLine("Nom\tTaille\tParent");
+                            Console.WriteLine("Nom\tTaille  \tParent");
                             break;
                         case "Computername":
                             Console.WriteLine("Nom du PC:                     " + Kernel.ComputerName);
@@ -64,6 +69,9 @@ namespace Alve_OS.System.Translation
                             break;
                         case "AmountRAM":
                             Console.WriteLine("Montant de la RAM:             " + Cosmos.Core.CPU.GetAmountOfRAM() + "MB");
+                            break;
+                        case "MAC":
+                            Console.WriteLine("Adresse MAC                    " + Cosmos.HAL.Network.MACAddress.Broadcast);
                             break;
                         case "UnknownCommand":
                             Console.WriteLine("Commande inconnue.");
@@ -128,6 +136,24 @@ namespace Alve_OS.System.Translation
                         case "wrongpassword":
                             Console.WriteLine("Mauvais mot de passe.");
                             break;
+                        case "liquideditor":
+                            Console.WriteLine("Liquid Editor v" + arg + " par TheCool1James & valentinbreiz                            ");
+                            break;
+                        case "filename":
+                            Console.Write("Nom du fichier : ");
+                            break;
+                        case "saved":
+                            Console.WriteLine("'" + arg + "' a bien été sauvegardé dans '" + arg2 + "' !");
+                            break;
+                        case "menuliquideditor":
+                            Console.Write("[F1]Sauvegarder  [F2]Nouveau  [ESC]Quitter\n");
+                            break;
+                        case "list":
+                            Console.WriteLine(" Liste: " + arg + "\n");
+                            break;
+                        case "line":
+                            Console.WriteLine(" Ligne: " + arg + "\n");
+                            break;
                         case "askcomputername":
                             Console.WriteLine("Choisissez le nom pour votre ordinateur :");
                             break;
@@ -160,6 +186,8 @@ namespace Alve_OS.System.Translation
                             break;
                         case "dateoftheday":
                             Console.WriteLine("La date du jour est : " + arg);
+                        case "time": //         07/08/2017, 01:12:40
+                            Console.WriteLine("Date et heure du système:      " + Time.DayString() + "/" + Time.MonthString() + "/" + Time.YearString() + ", " + Time.HourString() + ":" + Time.MinuteString() + ":" + Time.SecondString());
                             break;
                     }
                     break;
@@ -188,7 +216,7 @@ namespace Alve_OS.System.Translation
                             Console.WriteLine(arg + " already exist!");
                             break;
                         case "NameSizeParent":
-                            Console.WriteLine("Name\tSize\tParent");
+                            Console.WriteLine("Name\tSize  \tParent");
                             break;
                         case "Computername":
                             Console.WriteLine("Computer name:             " + Kernel.ComputerName);
@@ -204,6 +232,9 @@ namespace Alve_OS.System.Translation
                             break;
                         case "AmountRAM":
                             Console.WriteLine("Amount of RAM:             " + Cosmos.Core.CPU.GetAmountOfRAM() + "MB");
+                            break;
+                        case "MAC":
+                            Console.WriteLine("MAC Adress:                " + Cosmos.HAL.Network.MACAddress.Broadcast);
                             break;
                         case "UnknownCommand":
                             Console.WriteLine("Unknown command.");
@@ -265,6 +296,24 @@ namespace Alve_OS.System.Translation
                         case "wrongpassword":
                             Console.WriteLine("Wrong Password.");
                             break;
+                        case "liquideditor":
+                            Console.WriteLine("Liquid Editor v" + arg + " by TheCool1James & valentinbreiz                             ");
+                            break;
+                        case "filename":
+                            Console.Write("File name : ");
+                            break;
+                        case "saved":
+                            Console.WriteLine("'" + arg + "' has been saved in '" + arg2 + "' !");
+                            break;
+                        case "menuliquideditor":
+                            Console.Write("[F1]Save  [F2]New  [ESC]Exit\n");
+                            break;
+                        case "list":
+                            Console.WriteLine(" List: " + arg + "\n");
+                            break;
+                        case "line":
+                            Console.WriteLine(" Line: " + arg + "\n");
+                            break;
                         case "askcomputername":
                             Console.WriteLine("Choose your computer name :");
                             break;
@@ -300,6 +349,9 @@ namespace Alve_OS.System.Translation
                             break;
                         case "dateoftheday":
                             Console.WriteLine("Date of the day is : " + arg);
+                        
+                        case "time":
+                            Console.WriteLine("Date and time:             " + Time.MonthString() + "/" + Time.DayString() + "/" + Time.YearString() + ", " + Time.HourString() + ":" + Time.MinuteString() + ":" + Time.SecondString());
                             break;
                     }
                     break;

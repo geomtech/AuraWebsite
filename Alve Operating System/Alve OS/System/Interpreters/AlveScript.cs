@@ -142,7 +142,7 @@ namespace Alve_OS.System.Interpreters
                 }
                 int location = file.IndexOf("date");
                 file = file.Remove(location, 4);
-                Text.Display("dateoftheday", "date"); //todo
+                Text.Display("dateoftheday", "Time.MonthString() + "/" + Time.DayString() + "/" + Time.YearString()"); //todo
 
             }
 
