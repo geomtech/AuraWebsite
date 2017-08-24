@@ -84,21 +84,21 @@ namespace Alve_OS
 
             #endregion
 
-            setup.SetupVerifyCompleted();
+            //setup.SetupVerifyCompleted();
 
-            langSelected = File.ReadAllText(@"0:\System\lang.set");
+           // langSelected = File.ReadAllText(@"0:\System\lang.set");
 
             #region Language
 
-            Lang.Keyboard.Init();
+           // Lang.Keyboard.Init();
 
             #endregion
 
-            Info.getComputerName();
+           // Info.getComputerName();
 
-            Color.GetBackgroundColor();
+           // Color.GetBackgroundColor();
 
-            color = Color.GetTextColor();
+          //  color = Color.GetTextColor();
 
             running = true;
         }
@@ -109,28 +109,10 @@ namespace Alve_OS
 
         protected override void Run()
         {
-            try
-            {
-                while (running)
-                {
-                    if (Logged) //If logged
-                    {
-                        BeforeCommand();
-                        var cmd = Console.ReadLine();
-                        Shell.Interpreter.Interpret(cmd);
-                        Console.WriteLine();
-                    }
-                    else
-                    {
-                        Login.Init();
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                running = false;
-                Crash.StopKernel(ex);
-            }
+            System.GUI.desktop desktop = new System.GUI.desktop();
+            desktop.Init();
+
+            Console.ReadKey();
         }
 
         #endregion

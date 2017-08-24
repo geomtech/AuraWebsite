@@ -491,7 +491,8 @@ namespace Alve_OS.Shell
 
             else if (cmd.Equals("graphic"))
             {
-                CGS.Start();
+                System.GUI.desktop desktop = new desktop();
+                desktop.Init();
             }
 
             #endregion
