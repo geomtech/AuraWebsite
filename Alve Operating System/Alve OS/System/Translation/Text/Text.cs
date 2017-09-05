@@ -218,6 +218,9 @@ namespace Alve_OS.System.Translation
                             Console.WriteLine("  Volume ###\tFormat\tSize");
                             Console.WriteLine("  ----------\t------\t--------");
                             break;
+                        case "lastlogin":
+                            Console.WriteLine("Dernière connexion: " + arg);
+                            break;
                     }
                     break;
 
@@ -404,6 +407,9 @@ namespace Alve_OS.System.Translation
                             Console.WriteLine();
                             Console.WriteLine("  Volume ###\tFormat\tSize");
                             Console.WriteLine("  ----------\t------\t--------");
+                            break;
+                        case "lastlogin":
+                            Console.WriteLine("Last login: " + arg);
                             break;
                     }
                     break;

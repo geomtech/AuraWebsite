@@ -34,10 +34,11 @@ namespace Alve_OS.System.Users
                         string md5psw = MD5.hash(pass);
                         Console.WriteLine();
 
-                        string UserFile = File.ReadAllText(@"0:\System\Users\" + user + ".usr");
+                        string[] UserFile = File.ReadAllLines(@"0:\System\Users\" + user + ".usr");
+                        string UserFilePswLvl = UserFile[0];
 
                         Char delimiter = '|';
-                        string[] UserFileContent = UserFile.Split(delimiter);
+                        string[] UserFileContent = UserFilePswLvl.Split(delimiter);
 
                         if (md5psw == UserFileContent[0])
                         {
@@ -48,9 +49,19 @@ namespace Alve_OS.System.Users
                             {
                                 Kernel.userLevelLogged = UserLevel.Administrator();
                             }
+
+                            string StringTime = Time.DayString() + "/" + Time.MonthString() + "/" + Time.YearString() + ", " + Time.HourString() + ":" + Time.MinuteString() + ":" + Time.SecondString();
+                            string[] LoginLogFile = { UserFilePswLvl, StringTime };
+
+                            File.WriteAllLines(@"0:\System\Users\" + user + ".usr", LoginLogFile);
+
                             Console.Clear();
                             WelcomeMessage.Display();
                             Text.Display("logged", user);
+                            if (UserFile.Length > 1)
+                            {
+                                Text.Display("lastlogin", UserFile[1]);
+                            }
                             Console.WriteLine("");
                             Kernel.Logged = true;
                         }
@@ -80,10 +91,11 @@ namespace Alve_OS.System.Users
                         string md5psw = MD5.hash(pass1);
                         Console.WriteLine();
 
-                        string UserFile = File.ReadAllText(@"0:\System\Users\" + user1 + ".usr");
+                        string[] UserFile = File.ReadAllLines(@"0:\System\Users\" + user1 + ".usr");
+                        string UserFilePswLvl = UserFile[0];
 
                         Char delimiter = '|';
-                        string[] UserFileContent = UserFile.Split(delimiter);
+                        string[] UserFileContent = UserFilePswLvl.Split(delimiter);
 
                         if (md5psw == UserFileContent[0])
                         {
@@ -94,9 +106,19 @@ namespace Alve_OS.System.Users
                             {
                                 Kernel.userLevelLogged = UserLevel.Administrator();
                             }
+
+                            string StringTime = Time.MonthString() + "/" + Time.DayString() + "/" + Time.YearString() + ", " + Time.HourString() + ":" + Time.MinuteString() + ":" + Time.SecondString();
+                            string[] LoginLogFile = { UserFile[0], StringTime };
+
+                            File.WriteAllLines(@"0:\System\Users\" + user1 + ".usr", LoginLogFile);
+
                             Console.Clear();
                             WelcomeMessage.Display();
                             Text.Display("logged", user1);
+                            if(UserFile.Length > 1)
+                            {
+                                Text.Display("lastlogin", UserFile[1]);
+                            }
                             Console.WriteLine("");
                             Kernel.Logged = true;
                         }

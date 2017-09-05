@@ -33,10 +33,10 @@ namespace Alve_OS.System
                     //redo that bullshit code
                     if ((Kernel.RootContent == MD5.hash("root") + "|admin") || (Kernel.ComputerName == "Alve-PC"))
                     {
-                        Console.WriteLine();
+                        //Console.WriteLine();
 
-                        Console.ForegroundColor = ConsoleColor.Green;
-                        Text.Display("tips");
+                        //Console.ForegroundColor = ConsoleColor.Green;
+                        //Text.Display("tips");
 
                         if (Kernel.RootContent == MD5.hash("root") + "|admin")
                         {
@@ -66,10 +66,10 @@ namespace Alve_OS.System
                     //redo that bullshit code
                     if ((Kernel.RootContent == MD5.hash("root") + "|admin") || (Kernel.ComputerName == "Alve-PC"))
                     {
-                        Console.WriteLine();
+                        //Console.WriteLine();
 
-                        Console.ForegroundColor = ConsoleColor.Green;
-                        Text.Display("tips");
+                        //Console.ForegroundColor = ConsoleColor.Green;
+                        //Text.Display("tips");
 
                         if (Kernel.RootContent == MD5.hash("root") + "|admin")
                         {
