@@ -626,18 +626,22 @@ namespace Alve_OS.Shell
                 L.Text.Display("OSName");
                 L.Text.Display("OSVersion");
                 L.Text.Display("OSRevision");
-                L.Text.Display("time");
                 L.Text.Display("AmountRAM");
-
-                if (Kernel.userLogged == "root")
-                {
-                    L.Text.Display("MAC");
-                }
             }
 
             else if (cmd.Equals("ver"))
             {
                 L.Text.Display("about");
+            }
+
+            else if (cmd.Equals("ipconfig"))
+            {
+                L.Text.Display("MAC");
+            }
+
+            else if (cmd.Equals("time"))
+            {
+                L.Text.Display("time");
             }
 
             #endregion
@@ -647,6 +651,10 @@ namespace Alve_OS.Shell
             else if (cmd.Equals("crash"))
             {
                 throw new Exception("Crash test");
+            }
+            else if (cmd.Equals("getlevel"))
+            {
+                Console.WriteLine(Kernel.userLevelLogged);
             }
 
             #endregion
