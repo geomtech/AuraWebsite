@@ -173,6 +173,10 @@ namespace Aura_OS.Shell.cmdIntr
             {
                 Tests.Crash.c_Crash();
             }
+            else if (cmd.Equals("xml"))
+            {
+                FileSystem.XML.c_XML();
+            }
 
         #endregion Tests
 
