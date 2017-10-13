@@ -4,9 +4,10 @@
 * PROGRAMMER(S):    DA CRUZ Alexy <dacruzalexy@gmail.com>
 */
 
-using Aura_OS.XML;
+using TObject.Shared;
 using System.IO;
 using L = Aura_OS.System.Translation;
+using System;
 
 namespace Aura_OS.Shell.cmdIntr.FileSystem
 {
@@ -36,9 +37,10 @@ namespace Aura_OS.Shell.cmdIntr.FileSystem
         /// <param name="count">The count index for remove.</param>
         public static void c_XML()
         {
-                XMLParser xMLParser = new XMLParser();
-                xMLParser.Parse(@"0:\test.xml", "test");
-            
+            string xml = File.ReadAllText(@"0:\test.xml");
+            NanoXMLDocument nanoXMLDocument = new NanoXMLDocument(xml);
+            string myAttribute = nanoXMLDocument.RootNode["food"].GetAttribute("test").Value;
+            Console.WriteLine(myAttribute);
         }
 
     }
