@@ -57,6 +57,8 @@ namespace Aura_OS.System
             Step3(filesystemexists);
         }
 
+        public static string conffile;
+
         /// <summary>
         /// Making directories that are required for Aura.
         /// </summary>
@@ -68,11 +70,7 @@ namespace Aura_OS.System
             {
                 InitDefaults();
 
-                if (!File.Exists(@"0:\System\color.set"))
-                {
-                    File.Create(@"0:\System\color.set");
-                    File.WriteAllText(@"0:\System\color.set", "7");
-                }
+                conffile = "color=7\n";
 
                 Info.setComputerName("aura-pc");
 
@@ -241,32 +239,16 @@ namespace Aura_OS.System
             switch (Kernel.langSelected)
             {
                 case "en_US":
-                    File.Create(@"0:\System\lang.set");
-                    if (File.Exists(@"0:\System\lang.set"))
-                    {
-                        File.WriteAllText(@"0:\System\lang.set", Kernel.langSelected);
-                        Console.SetCursorPosition(10, 12);
-                        Console.WriteLine("###############");
-                        Console.SetCursorPosition(x, y);
-                    }
-                    else
-                    {
-                        Menu.DispErrorDialog("The language configuration already exists!");
-                    }
+                    conffile = conffile + "lang=en_US\n";
+                    Console.SetCursorPosition(10, 12);
+                    Console.WriteLine("###############");
+                    Console.SetCursorPosition(x, y);
                     break;
                 case "fr_FR":
-                    File.Create(@"0:\System\lang.set");
-                    if (File.Exists(@"0:\System\lang.set"))
-                    {
-                        File.WriteAllText(@"0:\System\lang.set", Kernel.langSelected);
-                        Console.SetCursorPosition(10, 12);
-                        Console.WriteLine("###############");
-                        Console.SetCursorPosition(x, y);
-                    }
-                    else
-                    {
-                        Menu.DispErrorDialog("La configuration des langue existe déjà!");
-                    }
+                    conffile = conffile + "lang=fr_FR\n";
+                    Console.SetCursorPosition(10, 12);
+                    Console.WriteLine("###############");
+                    Console.SetCursorPosition(x, y);
                     break;
             }
 
